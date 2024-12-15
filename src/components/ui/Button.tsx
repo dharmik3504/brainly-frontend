@@ -1,18 +1,21 @@
+import { ReactElement } from "react";
+
 export interface ButtonProps {
   variant: "primary" | "secondary";
   size: "sm" | "md" | "lg";
   text: string;
-  startIcon?: any;
-  EndIcon?: any;
+  startIcon?: ReactElement;
+  EndIcon?: ReactElement;
   onClick: (e: any) => void;
 }
 export const Button = (props: ButtonProps) => {
   const { variant, size, text, startIcon, EndIcon } = props;
+
   const v = {
-    primary: "bg-purple-600",
-    secondary: "bg-purple-300",
+    primary: "bg-purple-600 text-white",
+    secondary: "bg-purple-300 text-purple-600",
   };
-  const defaultStyle = "rounded-2xl text-white flex";
+  const defaultStyle = "rounded-md flex m-2 items-center";
   const sizeStyle = {
     sm: "py-1 px-2",
     md: "py-2 px-4",
