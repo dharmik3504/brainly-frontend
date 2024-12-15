@@ -1,7 +1,24 @@
+import { useRef, useState } from "react";
 import { CrossIcon } from "../../icons/CrossIcon";
 import { Button } from "./Button";
+import { Input } from "./Input";
+import axios from "axios";
+import { BACKEND_URL } from "../../config";
 
+enum ContentType {
+  youtube = "Youtube",
+  twitter = "Twitter",
+}
 export const CreateComponentModal = ({ open, onClose }: any) => {
+  const [type, setType] = useState(ContentType.youtube);
+  const titleRef = useRef<HTMLInputElement>();
+  const linkRef = useRef<HTMLInputElement>();
+  async function addContent() {
+    const title = titleRef.current?.value;
+    const link = linkRef.current?.value;
+    const token = localStorage.getItem("token");
+    await axios.post(`${BACKEND_URL}/api/v1/content`);
+  }
   return (
     <div>
       {open && (
@@ -15,15 +32,31 @@ export const CreateComponentModal = ({ open, onClose }: any) => {
                 <CrossIcon />
               </div>
               <div>
-                <Input placeholder="Title" />
-                <Input placeholder="Link" />
+                <Input reference={titleRef} placeholder="Title" />
+                <Input reference={linkRef} placeholder="Link" />
+              </div>
+              <div className="flex">
+                <Button
+                  text="Youtube"
+                  size="md"
+                  variant={`${
+                    type === ContentType.youtube ? "primary" : "secondary"
+                  }`}
+                />
+                <Button
+                  text="Twitter"
+                  size="md"
+                  variant={`${
+                    type === ContentType.twitter ? "primary" : "secondary"
+                  }`}
+                />
               </div>
               <div className="flex justify-center">
                 <Button
                   variant="primary"
                   text="Submit"
                   size="md"
-                  onClick={() => {}}
+                  onClick={addContent}
                 />
               </div>
             </span>
@@ -33,22 +66,3 @@ export const CreateComponentModal = ({ open, onClose }: any) => {
     </div>
   );
 };
-
-function Input({
-  onChange,
-  placeholder,
-}: {
-  onChange: () => {};
-  placeholder: string;
-}) {
-  return (
-    <div>
-      <input
-        type="text"
-        placeholder={placeholder}
-        className="px-4 py-2 border rounded m-2"
-        onChange={onChange}
-      />
-    </div>
-  );
-}

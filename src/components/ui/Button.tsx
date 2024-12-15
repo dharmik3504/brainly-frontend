@@ -7,9 +7,20 @@ export interface ButtonProps {
   startIcon?: ReactElement;
   EndIcon?: ReactElement;
   onClick: (e: any) => void;
+  fullWidth?: boolean;
+  loading?: boolean;
 }
 export const Button = (props: ButtonProps) => {
-  const { variant, size, text, startIcon, EndIcon, onClick } = props;
+  const {
+    variant,
+    size,
+    text,
+    startIcon,
+    EndIcon,
+    onClick,
+    fullWidth,
+    loading,
+  } = props;
 
   const v = {
     primary: "bg-purple-600 text-white",
@@ -25,7 +36,10 @@ export const Button = (props: ButtonProps) => {
   return (
     <button
       onClick={onClick}
-      className={`${v[variant]} ${defaultStyle} ${sizeStyle[size]}`}
+      className={`${v[variant]} ${defaultStyle} ${sizeStyle[size]} ${
+        fullWidth ? "w-full flex justify-center items-center" : ""
+      } ${loading ? "opacity-45" : ""}`}
+      disabled={loading}
     >
       {startIcon ? <div className="pr-2">{startIcon}</div> : null} {text}
       {EndIcon ? <div className="pr-2">{EndIcon}</div> : null}
