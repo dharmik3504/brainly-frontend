@@ -9,7 +9,7 @@ export interface ButtonProps {
   onClick: (e: any) => void;
 }
 export const Button = (props: ButtonProps) => {
-  const { variant, size, text, startIcon, EndIcon } = props;
+  const { variant, size, text, startIcon, EndIcon, onClick } = props;
 
   const v = {
     primary: "bg-purple-600 text-white",
@@ -23,7 +23,10 @@ export const Button = (props: ButtonProps) => {
   };
   //
   return (
-    <button className={`${v[variant]} ${defaultStyle} ${sizeStyle[size]}`}>
+    <button
+      onClick={onClick}
+      className={`${v[variant]} ${defaultStyle} ${sizeStyle[size]}`}
+    >
       {startIcon ? <div className="pr-2">{startIcon}</div> : null} {text}
       {EndIcon ? <div className="pr-2">{EndIcon}</div> : null}
     </button>
